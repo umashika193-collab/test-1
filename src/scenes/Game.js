@@ -208,6 +208,9 @@ export default class Game extends Phaser.Scene {
   }
 
   createVirtualGamepad() {
+    // マルチタッチ対応（最大4点タッチまで認識させる）
+    this.input.addPointer(2);
+
     const padX = 60;
     const padY = 400;
     const padSize = 35;
