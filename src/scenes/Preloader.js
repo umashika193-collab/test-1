@@ -16,7 +16,7 @@ export default class Preloader extends Phaser.Scene {
     this.load.image('title_bg', 'assets/title_bg.png' + v);
     this.load.image('bg', 'assets/bg.png' + v);
     
-    const text = this.add.text(160, 240, 'LOADING...', { font: '24px Arial', fill: '#ffffff' });
+    const text = this.add.text(160, 300, 'LOADING...', { font: '24px Arial', fill: '#ffffff' });
     text.setOrigin(0.5, 0.5);
   }
 

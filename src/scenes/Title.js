@@ -7,19 +7,19 @@ export default class Title extends Phaser.Scene {
 
   create() {
     // Add renaissance boss background
-    const bg = this.add.image(160, 240, 'title_bg');
+    const bg = this.add.image(160, 300, 'title_bg');
     bg.setOrigin(0.5, 0.5);
     
-    // Scale bg to cover the screen (320x480)
+    // Scale bg to cover the screen (320x600)
     const scaleX = 320 / bg.width;
-    const scaleY = 480 / bg.height;
+    const scaleY = 600 / bg.height;
     bg.setScale(Math.max(scaleX, scaleY));
     
     // Add dark overlay for readability
-    this.add.rectangle(160, 240, 320, 480, 0x000000, 0.4);
+    this.add.rectangle(160, 300, 320, 600, 0x000000, 0.4);
 
     // Title Text: "御成敗式目"
-    const titleText = this.add.text(160, 160, '御成敗式目', {
+    const titleText = this.add.text(160, 200, '御成敗式目', {
       fontFamily: 'serif',
       fontSize: '48px',
       fill: '#ffffff',
@@ -30,7 +30,7 @@ export default class Title extends Phaser.Scene {
     titleText.setOrigin(0.5, 0.5);
 
     // Tap to Start Text
-    const startText = this.add.text(160, 380, '- TAP TO START -', {
+    const startText = this.add.text(160, 480, '- TAP TO START -', {
       fontFamily: 'sans-serif',
       fontSize: '20px',
       fill: '#ffffff',

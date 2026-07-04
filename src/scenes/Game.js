@@ -10,8 +10,11 @@ export default class Game extends Phaser.Scene {
     // Background
     // Assuming the generated image is large, we might need to scale the tilesprite.
     // We will just create a tileSprite and set its display size.
-    this.bg = this.add.tileSprite(160, 240, 1024, 1024, 'bg');
+    this.bg = this.add.tileSprite(160, 300, 1024, 1024, 'bg');
     this.bg.setScale(0.5); // Adjust based on the actual asset size
+    
+    // プレイヤーが下のUIエリア（Y:480〜600）に侵入しないように、物理判定の領域を画面上部（480px）に制限する
+    this.physics.world.setBounds(0, 0, 320, 480);
 
     // Player
     this.player = this.physics.add.sprite(160, 400, 'player');
@@ -212,7 +215,7 @@ export default class Game extends Phaser.Scene {
     this.input.addPointer(2);
 
     const padX = 60;
-    const padY = 400;
+    const padY = 520; // プレイ画面外の下部に配置
     const padSize = 35;
 
     this.dpad = { up: false, down: false, left: false, right: false };
@@ -229,9 +232,9 @@ export default class Game extends Phaser.Scene {
     this.addBtn(padX + padSize, padY, padSize, padSize, '▶', () => this.dpad.right = true, () => this.dpad.right = false);
 
     // A Button (Shoot)
-    this.addBtn(260, 400, 45, 45, 'A', () => this.btnA = true, () => this.btnA = false);
+    this.addBtn(260, 520, 45, 45, 'A', () => this.btnA = true, () => this.btnA = false);
     // B Button (Bomb - currently unused)
-    this.addBtn(210, 430, 45, 45, 'B', () => this.btnB = true, () => this.btnB = false);
+    this.addBtn(210, 550, 45, 45, 'B', () => this.btnB = true, () => this.btnB = false);
   }
 
   addBtn(x, y, w, h, label, onDown, onUp) {
@@ -305,8 +308,8 @@ export default class Game extends Phaser.Scene {
     // Game Clear Screen
     this.time.delayedCall(2000, () => {
       const cx = this.cameras.main.width / 2;
-      const cy = this.cameras.main.height / 2;
-      this.add.rectangle(cx, cy, 320, 480, 0xffffff, 0.9);
+      const cy = 240; // Center of play area
+      this.add.rectangle(cx, 300, 320, 600, 0xffffff, 0.9);
       this.add.text(cx, cy - 20, 'GAME CLEAR!!', { fontSize: '36px', fill: '#0000ff', fontStyle: 'bold' }).setOrigin(0.5);
       const btn = this.add.rectangle(cx, cy + 50, 200, 50, 0x000000, 1.0).setInteractive();
       this.add.text(cx, cy + 50, 'PLAY AGAIN', { fontSize: '20px', fill: '#fff', fontStyle: 'bold' }).setOrigin(0.5);
@@ -490,10 +493,10 @@ export default class Game extends Phaser.Scene {
     // Show Game Over and Continue button after delay
     this.time.delayedCall(1000, () => {
       const cx = this.cameras.main.width / 2;
-      const cy = this.cameras.main.height / 2;
+      const cy = 240; // Center of play area
       
       // Dim background
-      this.add.rectangle(cx, cy, 320, 480, 0x000000, 0.7);
+      this.add.rectangle(cx, 300, 320, 600, 0x000000, 0.7);
       
       this.add.text(cx, cy - 40, 'GAME OVER', { fontSize: '32px', fill: '#ff0000', fontStyle: 'bold' }).setOrigin(0.5);
 
@@ -572,7 +575,7 @@ export default class Game extends Phaser.Scene {
 
     this.enemies.getChildren().forEach(e => {
       if (!e) return;
-      if (e.y > 520) {
+      if (e.y > 640) {
         e.destroy();
         return;
       }
@@ -595,15 +598,15 @@ export default class Game extends Phaser.Scene {
     });
 
     this.enemyBullets.getChildren().forEach(b => {
-      if (b && (b.y > 520 || b.y < -20 || b.x < -20 || b.x > 340)) b.destroy();
+      if (b && (b.y > 640 || b.y < -20 || b.x < -20 || b.x > 340)) b.destroy();
     });
 
     this.bossBullets.getChildren().forEach(b => {
-      if (b && (b.y > 520 || b.y < -20 || b.x < -20 || b.x > 340)) b.destroy();
+      if (b && (b.y > 640 || b.y < -20 || b.x < -20 || b.x > 340)) b.destroy();
     });
 
     this.powerUps.getChildren().forEach(p => {
-      if (p && p.y > 520) p.destroy();
+      if (p && p.y > 640) p.destroy();
     });
   }
 }
