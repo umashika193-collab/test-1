@@ -424,7 +424,7 @@ export default class Game extends Phaser.Scene {
       angle: { min: 0, max: 360 },
       scale: { start: 0.02, end: 0 },
       blendMode: 'ADD',
-      lifespan: 300, // Disappear after 300ms
+      lifespan: 200, // 0.2秒で消滅
       quantity: 5
     });
   }
